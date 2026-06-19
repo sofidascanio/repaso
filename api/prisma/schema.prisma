@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String
+  passwordHash   String
+  refreshToken   String?
+  avatarUrl      String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  workspaces     Workspace[]
+  reviewLogs     ReviewLog[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  iconEmoji   String?   @default("📚")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  projects    Project[]
+
+  @@map("workspaces")
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  iconEmoji   String?   @default("📁")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  workspaceId String
+  workspace   Workspace   @relation(fields: [workspaceId], references: [id])
+
+  collections Collection[]
+
+  @@map("projects")
+}
+
+model Collection {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  iconEmoji   String?   @default("🗂️")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  projectId   String
+  project     Project     @relation(fields: [projectId], references: [id])
+
+  flashcards  Flashcard[]
+
+  @@map("collections")
+}
+
+model Flashcard {
+  id           String    @id @default(cuid())
+  question     String
+  answer       String
+  tags         String[]
+  imageUrl     String?
+  isFavorite   Boolean   @default(false)
+  isDifficult  Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  collectionId String
+  collection   Collection  @relation(fields: [collectionId], references: [id])
+
+  reviewLogs   ReviewLog[]
+
+  @@map("flashcards")
+}
+
+model ReviewLog {
+  id              String   @id @default(cuid())
+  result          ReviewResult
+  easeFactor      Float    @default(2.5)
+  interval        Int      @default(0)
+  repetitions     Int      @default(0)
+  nextReviewDate  DateTime
+  reviewedAt      DateTime @default(now())
+
+  flashcardId     String
+  flashcard       Flashcard @relation(fields: [flashcardId], references: [id])
+
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+
+  @@map("review_logs")
+}
+
+enum ReviewResult {
+  AGAIN
+  HARD
+  GOOD
+  EASY
+}
