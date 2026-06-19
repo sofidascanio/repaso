@@ -11,6 +11,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import type { StringValue } from 'ms';
 
 export interface AuthTokens {
     accessToken: string;
@@ -103,20 +104,22 @@ export class AuthService {
     private async generateTokens(user: User): Promise<AuthTokens> {
         const payload = { sub: user.id, email: user.email };
 
+        const accessExpires = this.config.get<string>('JWT_EXPIRES_IN') as StringValue;
+        const refreshExpires = this.config.get<string>('JWT_REFRESH_EXPIRES_IN') as StringValue;
+
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(payload, {
                 secret: this.config.get<string>('JWT_SECRET'),
-                expiresIn: parseInt(this.config.get<string>('JWT_EXPIRES_IN') || '3600', 10),
+                expiresIn: accessExpires,
             }),
             this.jwtService.signAsync(payload, {
                 secret: this.config.get<string>('JWT_REFRESH_SECRET'),
-                expiresIn: parseInt(this.config.get<string>('JWT_EXPIRES_IN') || '3600', 10),
+                expiresIn: refreshExpires,
             }),
         ]);
 
         return { accessToken, refreshToken };
     }
-
     private async saveRefreshToken(userId: string, refreshToken: string): Promise<void> {
         const hashed = await bcrypt.hash(refreshToken, 10);
         await this.userService.updateRefreshToken(userId, hashed);
