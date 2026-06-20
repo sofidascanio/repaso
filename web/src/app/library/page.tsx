@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import {
@@ -85,6 +86,9 @@ export default function LibraryPage() {
                     <h1 className={styles.logo}>Repaso</h1>
                     <nav className={styles.nav}>
                         <span className={styles.navActive}>Biblioteca</span>
+                        <Link href="/stats" className={styles.navLink}>
+                            Progreso
+                        </Link>
                     </nav>
                     <div className={styles.headerActions}>
                         <span className={styles.userName}>{user?.name}</span>

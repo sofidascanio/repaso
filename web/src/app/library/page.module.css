@@ -123,6 +123,21 @@
     font-style: italic;
 }
 
+.navLink {
+  font-family: var(--font-sans);
+  font-size: var(--text-label-md);
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+}
+
 @media (max-width: 640px) {
     .pageHeader {
         flex-direction: column;

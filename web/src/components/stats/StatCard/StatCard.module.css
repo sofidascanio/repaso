@@ -1,0 +1,62 @@
+.card {
+    background-color: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    box-shadow: var(--shadow-card);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.icon {
+    font-size: 20px;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.label {
+    font-size: var(--text-label-md);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-on-surface-variant);
+}
+
+.value {
+    font-family: var(--font-serif);
+    font-size: var(--text-headline-lg);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.sublabel {
+    font-size: var(--text-caption);
+    color: var(--color-on-surface-variant);
+    font-style: italic;
+}
+
+.primary .icon,
+.primary .value {
+    color: var(--color-primary);
+}
+
+.secondary .icon,
+.secondary .value {
+    color: var(--color-secondary);
+}
+
+.tertiary .icon,
+.tertiary .value {
+    color: var(--color-on-tertiary-container);
+}
+
+.error .icon,
+.error .value {
+    color: var(--color-error);
+}

@@ -7,6 +7,7 @@ import { ProjectModule } from './project/project.module';
 import { CollectionModule } from './collection/collection.module';
 import { FlashcardModule } from './flashcard/flashcard.module';
 import { ReviewModule } from './review/review.module';
+import { StatsModule } from './stats/stats.module';
 import { validate } from './config/env.validation';
 
 @Module({
@@ -22,6 +23,7 @@ import { validate } from './config/env.validation';
 		CollectionModule,
 		FlashcardModule,
 		ReviewModule,
+		StatsModule,
 	],
 })
 export class AppModule {}
