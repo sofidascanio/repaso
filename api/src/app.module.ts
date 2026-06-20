@@ -5,6 +5,8 @@ import { AuthModule } from './auth/auth.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { ProjectModule } from './project/project.module';
 import { CollectionModule } from './collection/collection.module';
+import { FlashcardModule } from './flashcard/flashcard.module';
+import { ReviewModule } from './review/review.module';
 import { validate } from './config/env.validation';
 
 @Module({
@@ -18,6 +20,8 @@ import { validate } from './config/env.validation';
 		WorkspaceModule,
 		ProjectModule,
 		CollectionModule,
+		FlashcardModule,
+		ReviewModule,
 	],
 })
 export class AppModule {}

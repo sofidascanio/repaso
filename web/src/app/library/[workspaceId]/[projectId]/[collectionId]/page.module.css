@@ -1,0 +1,133 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.headerInner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-gutter);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-body-md);
+    flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+    color: var(--color-on-surface-variant);
+    transition: color 0.2s;
+}
+
+.breadcrumbLink:hover {
+    color: var(--color-primary);
+}
+
+.breadcrumbSep {
+    color: var(--color-outline-variant);
+}
+
+.breadcrumbCurrent {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius);
+    color: var(--color-on-surface-variant);
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.backBtn:hover {
+    background-color: var(--color-surface-container-high);
+}
+
+.backBtn span {
+    font-size: 20px;
+}
+
+.main {
+    flex: 1;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-xxl) var(--space-gutter);
+    width: 100%;
+}
+
+.pageHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+}
+
+.pageTitle {
+    font-family: var(--font-serif);
+    font-size: var(--text-headline-lg);
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: var(--tracking-tight);
+}
+
+.pageSubtitle {
+    font-size: var(--text-body-md);
+    color: var(--color-on-surface-variant);
+    font-style: italic;
+    margin-top: var(--space-xs);
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.loadingState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xxl);
+    color: var(--color-on-surface-variant);
+    font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .pageHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+
+    .headerActions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

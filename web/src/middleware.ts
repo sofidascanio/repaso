@@ -18,6 +18,10 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/library', request.url));
     }
 
+    if (hasRefreshToken && isPublicRoute) {
+        return NextResponse.redirect(new URL('/study', request.url));
+    }
+
     return NextResponse.next();
 }
 
