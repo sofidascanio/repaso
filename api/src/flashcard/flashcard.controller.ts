@@ -16,6 +16,7 @@ import { UpdateFlashcardDto } from './dto/update-flashcard.dto';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import type { User } from '@prisma/client';
+import { ParseCuidPipe } from '@/common/pipes/parse-cuid.pipe';
 
 @Controller()
 @UseGuards(JwtAuthGuard)
@@ -24,7 +25,7 @@ export class FlashcardController {
 
     @Get('collections/:collectionId/flashcards')
     findAll(
-        @Param('collectionId') collectionId: string,
+        @Param('collectionId', ParseCuidPipe) collectionId: string,
         @CurrentUser() user: User,
     ) {
         return this.flashcardService.findAll(collectionId, user.id);
@@ -32,7 +33,7 @@ export class FlashcardController {
 
     @Get('collections/:collectionId/flashcards/study')
     findForStudy(
-        @Param('collectionId') collectionId: string,
+        @Param('collectionId', ParseCuidPipe) collectionId: string,
         @CurrentUser() user: User,
     ) {
         return this.flashcardService.findForStudy(collectionId, user.id);
@@ -40,7 +41,7 @@ export class FlashcardController {
 
     @Post('collections/:collectionId/flashcards')
     create(
-        @Param('collectionId') collectionId: string,
+        @Param('collectionId', ParseCuidPipe) collectionId: string,
         @Body() dto: CreateFlashcardDto,
         @CurrentUser() user: User,
     ) {
@@ -48,13 +49,13 @@ export class FlashcardController {
     }
 
     @Get('flashcards/:id')
-    findOne(@Param('id') id: string, @CurrentUser() user: User) {
+    findOne(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.flashcardService.findOne(id, user.id);
     }
 
     @Patch('flashcards/:id')
     update(
-        @Param('id') id: string,
+        @Param('id', ParseCuidPipe) id: string,
         @Body() dto: UpdateFlashcardDto,
         @CurrentUser() user: User,
     ) {
@@ -63,7 +64,7 @@ export class FlashcardController {
 
     @Delete('flashcards/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    remove(@Param('id') id: string, @CurrentUser() user: User) {
+    remove(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.flashcardService.remove(id, user.id);
     }
 }

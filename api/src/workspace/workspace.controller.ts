@@ -16,6 +16,7 @@ import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import type { User } from '@prisma/client';
+import { ParseCuidPipe } from '@/common/pipes/parse-cuid.pipe';
 
 @Controller('workspaces')
 @UseGuards(JwtAuthGuard)
@@ -28,7 +29,7 @@ export class WorkspaceController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string, @CurrentUser() user: User) {
+    findOne(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.workspaceService.findOne(id, user.id);
     }
 
@@ -39,7 +40,7 @@ export class WorkspaceController {
 
     @Patch(':id')
     update(
-        @Param('id') id: string,
+        @Param('id', ParseCuidPipe) id: string,
         @Body() dto: UpdateWorkspaceDto,
         @CurrentUser() user: User,
     ) {
@@ -48,7 +49,7 @@ export class WorkspaceController {
 
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    remove(@Param('id') id: string, @CurrentUser() user: User) {
+    remove(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.workspaceService.remove(id, user.id);
     }
 }

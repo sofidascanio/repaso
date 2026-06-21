@@ -16,6 +16,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import type { User } from '@prisma/client';
+import { ParseCuidPipe } from '@/common/pipes/parse-cuid.pipe';
 
 @Controller()
 @UseGuards(JwtAuthGuard)
@@ -24,7 +25,7 @@ export class ProjectController {
 
     @Get('workspaces/:workspaceId/projects')
     findAll(
-        @Param('workspaceId') workspaceId: string,
+        @Param('workspaceId', ParseCuidPipe) workspaceId: string,
         @CurrentUser() user: User,
     ) {
         return this.projectService.findAll(workspaceId, user.id);
@@ -32,7 +33,7 @@ export class ProjectController {
 
     @Post('workspaces/:workspaceId/projects')
     create(
-        @Param('workspaceId') workspaceId: string,
+        @Param('workspaceId', ParseCuidPipe) workspaceId: string,
         @Body() dto: CreateProjectDto,
         @CurrentUser() user: User,
     ) {
@@ -40,13 +41,13 @@ export class ProjectController {
     }
 
     @Get('projects/:id')
-    findOne(@Param('id') id: string, @CurrentUser() user: User) {
+    findOne(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.projectService.findOne(id, user.id);
     }
 
     @Patch('projects/:id')
     update(
-        @Param('id') id: string,
+        @Param('id', ParseCuidPipe) id: string,
         @Body() dto: UpdateProjectDto,
         @CurrentUser() user: User,
     ) {
@@ -55,7 +56,7 @@ export class ProjectController {
 
     @Delete('projects/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    remove(@Param('id') id: string, @CurrentUser() user: User) {
+    remove(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.projectService.remove(id, user.id);
     }
 }
