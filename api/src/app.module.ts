@@ -8,6 +8,8 @@ import { CollectionModule } from './collection/collection.module';
 import { FlashcardModule } from './flashcard/flashcard.module';
 import { ReviewModule } from './review/review.module';
 import { StatsModule } from './stats/stats.module';
+import { SearchModule } from './search/search.module';
+import { ProfileModule } from './profile/profile.module';
 import { validate } from './config/env.validation';
 
 @Module({
@@ -24,6 +26,8 @@ import { validate } from './config/env.validation';
 		FlashcardModule,
 		ReviewModule,
 		StatsModule,
+		SearchModule,
+		ProfileModule,
 	],
 })
 export class AppModule {}

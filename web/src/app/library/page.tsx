@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import {
@@ -17,6 +18,8 @@ import { Button } from '@/components/ui/Button/Button';
 import styles from './page.module.css';
 
 export default function LibraryPage() {
+    const router = useRouter();
+    
     const { accessToken, user, logout } = useAuth();
 
     const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
@@ -91,9 +94,17 @@ export default function LibraryPage() {
                         </Link>
                     </nav>
                     <div className={styles.headerActions}>
+                        <button className={styles.searchBtn}
+                                onClick={() => router.push('/search')}
+                                title="Buscar">
+                            <span className="material-symbols-outlined">search</span>
+                        </button>
                         <span className={styles.userName}>{user?.name}</span>
+                        <Link href="/profile" className={styles.profileBtn}>
+                            <span className="material-symbols-outlined">account_circle</span>
+                        </Link>
                         <button className={styles.logoutBtn} onClick={logout}>
-                        <span className="material-symbols-outlined">logout</span>
+                            <span className="material-symbols-outlined">logout</span>
                         </button>
                     </div>
                 </div>

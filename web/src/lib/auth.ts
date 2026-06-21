@@ -55,8 +55,11 @@ export async function loginUser(data: {
     });
 }
 
-export async function logoutUser(): Promise<void> {
-    await authFetch('/auth/logout', { method: 'POST' });
+export async function logoutUser(accessToken: string): Promise<void> {
+    await authFetch('/auth/logout', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${accessToken}` },
+    });
 }
 
 export async function refreshAccessToken(): Promise<{ accessToken: string }> {

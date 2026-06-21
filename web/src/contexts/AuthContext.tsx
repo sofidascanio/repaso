@@ -16,6 +16,7 @@ import {
     registerUser,
     getMe,
 } from '@/lib/auth';
+import { redirect } from 'next/dist/server/api-utils';
 
 interface AuthContextValue {
     user: AuthUser | null;
@@ -73,12 +74,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const logout = useCallback(async () => {
         try {
-            await logoutUser();
+            await logoutUser(accessToken!);
         } finally {
             setUser(null);
             setAccessToken(null);
         }
-    }, []);
+    }, [accessToken]);
 
     return (
         <AuthContext.Provider
