@@ -15,6 +15,9 @@ import { FlashcardItem } from '@/components/flashcard/FlashcardItem/FlashcardIte
 import { FlashcardModal } from '@/components/flashcard/FlashcardModal/FlashcardModal';
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState';
 import { Button } from '@/components/ui/Button/Button';
+import { ImportExportMenu } from '@/components/flashcard/ImportExportMenu/ImportExportMenu';
+import { ImportResultModal } from '@/components/flashcard/ImportResultModal/ImportResultModal';
+import { ImportResult } from '@/lib/import-export';
 import styles from './page.module.css';
 
 export default function CollectionDetailPage() {
@@ -30,6 +33,9 @@ export default function CollectionDetailPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(null);
+
+    const [importResult, setImportResult] = useState<ImportResult | null>(null);
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
     const loadFlashcards = useCallback(async () => {
         if (!accessToken || !collectionId) return;
@@ -106,6 +112,14 @@ export default function CollectionDetailPage() {
         setIsModalOpen(true);
     }
 
+    function handleImportSuccess(result: ImportResult) {
+        setImportResult(result);
+        setIsImportModalOpen(true);
+        if (result.imported > 0) {
+            loadFlashcards();
+        }
+    }
+
     return (
         <div className={styles.page}>
             <header className={styles.header}>
@@ -131,6 +145,10 @@ export default function CollectionDetailPage() {
                             }>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </button>
+                    <ImportExportMenu accessToken={accessToken!}
+                                    collectionId={collectionId}
+                                    collectionName="Mi colección"
+                                    onImportSuccess={handleImportSuccess}/>
                 </div>
             </header>
 
@@ -192,6 +210,10 @@ export default function CollectionDetailPage() {
                     </div>
                 )}
             </main>
+
+            <ImportResultModal isOpen={isImportModalOpen}
+                                onClose={() => setIsImportModalOpen(false)}
+                                result={importResult}/>
 
             <FlashcardModal isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}

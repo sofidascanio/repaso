@@ -10,6 +10,7 @@ import { ReviewModule } from './review/review.module';
 import { StatsModule } from './stats/stats.module';
 import { SearchModule } from './search/search.module';
 import { ProfileModule } from './profile/profile.module';
+import { ImportExportModule } from './import-export/import-export.module';
 import { validate } from './config/env.validation';
 
 @Module({
@@ -28,6 +29,7 @@ import { validate } from './config/env.validation';
 		StatsModule,
 		SearchModule,
 		ProfileModule,
+		ImportExportModule,
 	],
 })
 export class AppModule {}
