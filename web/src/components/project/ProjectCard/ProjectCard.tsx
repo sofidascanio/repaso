@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Project } from '@/lib/projects';
+import { AppIconImg } from '@/components/ui/AppIconImg/AppIconImg';
 import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
@@ -20,7 +21,7 @@ export function ProjectCard({
             <Link href={`/library/${workspaceId}/${project.id}`}
                   className={styles.cardLink}>
                 <div className={styles.header}>
-                    <span className={styles.emoji}>{project.iconEmoji ?? '📁'}</span>
+                    <AppIconImg iconId={project.iconEmoji} size={32} />
                 </div>
                 <div className={styles.body}>
                     <h3 className={styles.name}>{project.name}</h3>

@@ -11,6 +11,7 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -18,10 +19,12 @@ import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import type { User } from '@prisma/client';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @ApiOperation({ summary: 'Registrar nuevo usuario' })
     @Post('register')
     async register(
         @Body() dto: RegisterDto,
@@ -32,6 +35,7 @@ export class AuthController {
         return { user, accessToken: tokens.accessToken };
     }
 
+    @ApiOperation({ summary: 'Iniciar sesión' })
     @Post('login')
     @HttpCode(HttpStatus.OK)
     async login(
@@ -43,6 +47,7 @@ export class AuthController {
         return { user, accessToken: tokens.accessToken };
     }
 
+    @ApiOperation({ summary: 'Renovar access token con refresh token (cookie)' })
     @Post('refresh')
     @HttpCode(HttpStatus.OK)
     async refresh(
@@ -64,6 +69,8 @@ export class AuthController {
         return { accessToken: tokens.accessToken };
     }
 
+    @ApiOperation({ summary: 'Cerrar sesión' })
+    @ApiBearerAuth('access-token')
     @Post('logout')
     @HttpCode(HttpStatus.OK)
     @UseGuards(JwtAuthGuard)
@@ -76,13 +83,14 @@ export class AuthController {
         return { message: 'Sesión cerrada correctamente' };
     }
 
+    @ApiOperation({ summary: 'Obtener usuario autenticado' })
+    @ApiBearerAuth('access-token')
     @Get('me')
     @UseGuards(JwtAuthGuard)
     me(@CurrentUser() user: User) {
         return this.authService.toSafeUser(user);
     }
 
-    // 
     private setRefreshTokenCookie(res: Response, token: string) {
         res.cookie('refresh_token', token, {
             httpOnly: true,

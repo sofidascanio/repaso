@@ -10,6 +10,7 @@ import {
     Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { ProfileService } from './profile.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
@@ -23,16 +24,20 @@ class DeleteAccountDto {
     password!: string;
 }
 
+@ApiTags('Profile')
+@ApiBearerAuth('access-token')
 @Controller('profile')
 @UseGuards(JwtAuthGuard)
 export class ProfileController {
     constructor(private readonly profileService: ProfileService) {}
 
+    @ApiOperation({ summary: 'Obtener perfil del usuario autenticado' })
     @Get()
     getProfile(@CurrentUser() user: User) {
         return this.profileService.getProfile(user.id);
     }
 
+    @ApiOperation({ summary: 'Cambiar contraseña' })
     @Patch()
     updateProfile(
         @Body() dto: UpdateProfileDto,
@@ -41,6 +46,7 @@ export class ProfileController {
         return this.profileService.updateProfile(user.id, dto);
     }
 
+    @ApiOperation({ summary: 'Cambiar contraseña' })
     @Patch('password')
     @HttpCode(HttpStatus.NO_CONTENT)
     changePassword(
@@ -50,6 +56,7 @@ export class ProfileController {
         return this.profileService.changePassword(user.id, dto);
     }
 
+    @ApiOperation({ summary: 'Eliminar cuenta permanentemente' })
     @Delete()
     @HttpCode(HttpStatus.NO_CONTENT)
     async deleteAccount(

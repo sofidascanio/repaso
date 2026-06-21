@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Workspace } from '@/lib/workspaces';
+import { AppIconImg } from '@/components/ui/AppIconImg/AppIconImg';
 import styles from './WorkspaceCard.module.css';
 
 interface WorkspaceCardProps {
@@ -13,7 +14,7 @@ export function WorkspaceCard({ workspace, onEdit, onDelete }: WorkspaceCardProp
         <div className={styles.card}>
             <Link href={`/library/${workspace.id}`} className={styles.cardLink}>
                 <div className={styles.header}>
-                    <span className={styles.emoji}>{workspace.iconEmoji ?? '📚'}</span>
+                    <AppIconImg iconId={workspace.iconEmoji} size={32} />
                 </div>
                 <div className={styles.body}>
                     <h3 className={styles.name}>{workspace.name}</h3>

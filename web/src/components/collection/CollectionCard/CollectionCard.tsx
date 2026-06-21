@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Collection } from '@/lib/collections';
+import { AppIconImg } from '@/components/ui/AppIconImg/AppIconImg';
 import styles from './CollectionCard.module.css';
 
 interface CollectionCardProps {
@@ -22,7 +23,7 @@ export function CollectionCard({
             <Link href={`/library/${workspaceId}/${projectId}/${collection.id}`}
                   className={styles.cardLink}>
                 <div className={styles.header}>
-                    <span className={styles.emoji}>{collection.iconEmoji ?? '🗂️'}</span>
+                    <AppIconImg iconId={collection.iconEmoji} size={32} />
                 </div>
                 <div className={styles.body}>
                     <h3 className={styles.name}>{collection.name}</h3>

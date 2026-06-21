@@ -1,0 +1,7 @@
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+  /* convierte svg al color primary*/
+  filter: invert(8%) sepia(15%) saturate(1200%) hue-rotate(182deg) brightness(90%) contrast(95%);
+}

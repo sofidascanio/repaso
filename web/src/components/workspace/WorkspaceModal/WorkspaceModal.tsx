@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { Workspace } from '@/lib/workspaces';
 import { Button } from '@/components/ui/Button/Button';
 import { Input } from '@/components/ui/Input/Input';
+import { IconPicker } from '@/components/ui/IconPicker/IconPicker';
+import { DEFAULT_ICON_ID } from '@/lib/icons';
 import styles from './WorkspaceModal.module.css';
-
-const EMOJI_OPTIONS = ['📚', '🎓', '💼', '🔬', '🎨', '💻', '🌍', '⚗️', '📐', '🏛️'];
 
 interface WorkspaceModalProps {
     isOpen: boolean;
@@ -23,7 +23,7 @@ export function WorkspaceModal({
 }: WorkspaceModalProps) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [iconEmoji, setIconEmoji] = useState('📚');
+    const [iconId, setIconId] = useState(DEFAULT_ICON_ID);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -33,11 +33,11 @@ export function WorkspaceModal({
         if (workspace) {
             setName(workspace.name);
             setDescription(workspace.description ?? '');
-            setIconEmoji(workspace.iconEmoji ?? '📚');
+            setIconId(workspace.iconEmoji ?? DEFAULT_ICON_ID);
         } else {
             setName('');
             setDescription('');
-            setIconEmoji('📚');
+            setIconId(DEFAULT_ICON_ID);
         }
         setError('');
     }, [workspace, isOpen]);
@@ -51,7 +51,7 @@ export function WorkspaceModal({
             await onSubmit({
                 name,
                 description: description || undefined,
-                iconEmoji,
+                iconEmoji: iconId,
             });
             onClose();
         } catch (err) {
@@ -76,26 +76,14 @@ export function WorkspaceModal({
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <div className={styles.emojiSection}>
-                        <p className={styles.emojiLabel}>Ícono</p>
-                        <div className={styles.emojiGrid}>
-                            {EMOJI_OPTIONS.map((emoji) => (
-                                <button key={emoji}
-                                        type="button"
-                                        className={`${styles.emojiBtn} ${iconEmoji === emoji ? styles.emojiSelected : ''}`}
-                                        onClick={() => setIconEmoji(emoji)}>
-                                    {emoji}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    <IconPicker value={iconId} onChange={setIconId} />
 
-                    <Input label="Nombre"
-                        type="text"
-                        placeholder="Ej: Universidad, Trabajo, Idiomas"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required/>
+                    <Input  label="Nombre"
+                            type="text"
+                            placeholder="Ej: Universidad, Trabajo, Idiomas"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required/>
 
                     <div className={styles.textareaWrapper}>
                         <label className={styles.textareaLabel}>Descripción (opcional)</label>

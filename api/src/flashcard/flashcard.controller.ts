@@ -10,6 +10,7 @@ import {
     HttpCode,
     HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { FlashcardService } from './flashcard.service';
 import { CreateFlashcardDto } from './dto/create-flashcard.dto';
 import { UpdateFlashcardDto } from './dto/update-flashcard.dto';
@@ -18,11 +19,14 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import type { User } from '@prisma/client';
 import { ParseCuidPipe } from '@/common/pipes/parse-cuid.pipe';
 
+@ApiTags('Flashcards')
+@ApiBearerAuth('access-token')
 @Controller()
 @UseGuards(JwtAuthGuard)
 export class FlashcardController {
     constructor(private readonly flashcardService: FlashcardService) {}
 
+    @ApiOperation({ summary: 'Listar flashcards de una collection' })
     @Get('collections/:collectionId/flashcards')
     findAll(
         @Param('collectionId', ParseCuidPipe) collectionId: string,
@@ -31,6 +35,7 @@ export class FlashcardController {
         return this.flashcardService.findAll(collectionId, user.id);
     }
 
+    @ApiOperation({ summary: 'Flashcards para modo estudio' })
     @Get('collections/:collectionId/flashcards/study')
     findForStudy(
         @Param('collectionId', ParseCuidPipe) collectionId: string,
@@ -39,6 +44,7 @@ export class FlashcardController {
         return this.flashcardService.findForStudy(collectionId, user.id);
     }
 
+    @ApiOperation({ summary: 'Crear flashcard en una collection' })
     @Post('collections/:collectionId/flashcards')
     create(
         @Param('collectionId', ParseCuidPipe) collectionId: string,
@@ -48,11 +54,13 @@ export class FlashcardController {
         return this.flashcardService.create(collectionId, user.id, dto);
     }
 
+    @ApiOperation({ summary: 'Obtener flashcard por ID' })
     @Get('flashcards/:id')
     findOne(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
         return this.flashcardService.findOne(id, user.id);
     }
 
+    @ApiOperation({ summary: 'Actualizar flashcard' })
     @Patch('flashcards/:id')
     update(
         @Param('id', ParseCuidPipe) id: string,
@@ -62,6 +70,7 @@ export class FlashcardController {
         return this.flashcardService.update(id, user.id, dto);
     }
 
+    @ApiOperation({ summary: 'Eliminar flashcard' })
     @Delete('flashcards/:id')
     @HttpCode(HttpStatus.NO_CONTENT)
     remove(@Param('id', ParseCuidPipe) id: string, @CurrentUser() user: User) {
