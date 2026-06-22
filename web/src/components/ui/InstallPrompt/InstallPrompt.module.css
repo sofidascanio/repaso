@@ -1,0 +1,133 @@
+.banner {
+    position: fixed;
+    bottom: var(--space-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    width: calc(100% - var(--space-xxl));
+    max-width: 480px;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex: 1;
+    min-width: 0;
+}
+
+.appIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    flex-shrink: 0;
+}
+
+.text {
+    min-width: 0;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: var(--text-body-md);
+    font-weight: 600;
+    color: var(--color-on-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subtitle {
+    font-size: var(--text-caption);
+    color: var(--color-on-primary);
+    opacity: 0.7;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+}
+
+.dismissBtn {
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    color: var(--color-on-primary);
+    opacity: 0.7;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius);
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.dismissBtn:hover {
+    opacity: 1;
+}
+
+.installBtn {
+    font-family: var(--font-sans);
+    font-size: var(--text-label-md);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background-color: var(--color-on-primary);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius);
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+}
+
+.installBtn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+    .banner {
+        flex-direction: column;
+        align-items: stretch;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        width: 100%;
+        max-width: 100%;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .actions {
+        justify-content: flex-end;
+    }
+}
