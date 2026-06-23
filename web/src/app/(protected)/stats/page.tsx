@@ -69,22 +69,18 @@ export default function StatsPage() {
                                 <StatCard label="Racha actual"
                                           value={`${stats.streak} ${stats.streak === 1 ? 'día' : 'días'}`}
                                           icon="local_fire_department"
-                                          sublabel="Días consecutivos estudiando"
                                           accent="secondary"/>
                                 <StatCard label="Pendientes hoy"
                                           value={stats.dueToday}
                                           icon="schedule"
-                                          sublabel="Tarjetas para repasar"
                                           accent={stats.dueToday > 0 ? 'error' : 'tertiary'}/>
                                 <StatCard label="Repasadas hoy"
                                           value={stats.reviewsToday}
                                           icon="check_circle"
-                                          sublabel="Sesión de hoy"
                                           accent="primary"/>
                                 <StatCard label="Precisión"
                                           value={`${stats.accuracyRate}%`}
                                           icon="analytics"
-                                          sublabel="Bien + Fácil sobre el total"
                                           accent="tertiary"/>
                             </div>
                         </section>
@@ -99,7 +95,7 @@ export default function StatsPage() {
 
                         {/* desglose por resultado */}
                         <section className={styles.section}>
-                            <h3 className={styles.sectionTitle}>Desglose de Resultados</h3>
+                            <h3 className={styles.sectionTitle}>Resultados</h3>
                             <div className={styles.card}>
                                 <ResultsBreakdown reviewsByResult={stats.reviewsByResult}
                                                 total={stats.totalReviews}/>
@@ -108,17 +104,17 @@ export default function StatsPage() {
 
                         {/* totales del archivo */}
                         <section className={styles.section}>
-                            <h3 className={styles.sectionTitle}>El Archivo</h3>
+                            <h3 className={styles.sectionTitle}>Tu Archivo</h3>
                             <div className={styles.statsGrid}>
-                                <StatCard label="Workspaces"
+                                <StatCard label="Materias"
                                           value={stats.totalWorkspaces}
                                           icon="workspaces"
                                           accent="primary"/>
-                                <StatCard label="Projects"
+                                <StatCard label="Temas"
                                           value={stats.totalProjects}
                                           icon="folder"
                                           accent="primary"/>
-                                <StatCard label="Colecciones"
+                                <StatCard label="Examenes"
                                           value={stats.totalCollections}
                                           icon="style"
                                           accent="primary"/>

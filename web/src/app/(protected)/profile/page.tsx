@@ -328,7 +328,7 @@ export default function ProfilePage() {
                                     </h3>
                                     <p className={styles.sectionDesc}>
                                         Esta acción es <strong>permanente e irreversible</strong>.
-                                        Se eliminarán todos tus workspaces, projects, collections,
+                                        Se eliminarán todas tus materias, temas, examenes,
                                         flashcards y el historial de repasos.
                                     </p>
 

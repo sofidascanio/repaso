@@ -42,7 +42,7 @@ export default function LoginPage() {
 
                 <div className={styles.card}>
                     <form onSubmit={handleSubmit} className={styles.form}>
-                        <Input label="Email institucional"
+                        <Input label="Email"
                             type="email"
                             placeholder="ejemplo@universidad.edu"
                             value={email}

@@ -5,15 +5,15 @@
 .trigger {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
     font-family: var(--font-sans);
     font-size: var(--text-label-md);
     font-weight: 600;
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     color: var(--color-primary);
-    border: 1px solid var(--color-primary);
+    /* border: 1px solid var(--color-primary); */
     border-radius: var(--radius);
     background-color: transparent;
     transition: all 0.2s ease;
@@ -31,7 +31,7 @@
 }
 
 .trigger span {
-    font-size: 18px;
+    font-size: 16px;
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 

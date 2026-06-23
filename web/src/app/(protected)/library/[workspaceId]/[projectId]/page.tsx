@@ -97,10 +97,10 @@ export default function ProjectDetailPage() {
                         <span className={styles.breadcrumbSep}>›</span>
                         <Link href={`/library/${workspaceId}`}
                             className={styles.breadcrumbLink}>
-                            Projects
+                            Temas
                         </Link>
                         <span className={styles.breadcrumbSep}>›</span>
-                        <span className={styles.breadcrumbCurrent}>Collections</span>
+                        <span className={styles.breadcrumbCurrent}>Examenes</span>
                     </div>
                     <button className={styles.backBtn}
                             onClick={() => router.push(`/library/${workspaceId}`)}>
@@ -112,28 +112,28 @@ export default function ProjectDetailPage() {
             <main className={styles.main}>
                 <div className={styles.pageHeader}>
                     <div>
-                        <h2 className={styles.pageTitle}>Collections</h2>
+                        <h2 className={styles.pageTitle}>Examenes</h2>
                         <p className={styles.pageSubtitle}>
-                            Agrupa tus flashcards en colecciones temáticas
+                            Agrupa tus flashcards por examenes
                         </p>
                     </div>
                     <Button variant="primary" onClick={openCreateModal}>
                         <span className="material-symbols-outlined">add</span>
-                        Nueva collection
+                        Nuevo examen
                     </Button>
                 </div>
 
                 {isLoading ? (
                     <div className={styles.loadingState}>
-                        <p>Cargando collections...</p>
+                        <p>Cargando examenes...</p>
                     </div>
                 ) : collections.length === 0 ? (
                     <EmptyState icon="style"
-                                title="Sin collections todavía"
-                                description="Creá tu primera collection para empezar a agregar flashcards."
+                                title="Sin examenes todavía"
+                                description="Crea tu primer examen para empezar a agregar flashcards."
                                 action={
                                     <Button variant="primary" onClick={openCreateModal}>
-                                        Crear collection
+                                        Crear examen
                                     </Button>
                                 }/>
                 ) : (

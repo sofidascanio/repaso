@@ -80,12 +80,12 @@ export function ImportExportMenu({
             <button className={`${styles.trigger} ${isLoading ? styles.loading : ''}`}
                     onClick={() => setIsOpen((prev) => !prev)}
                     disabled={isLoading}
-                    title="Import / Export">
+                    title="Importar/Exportar">
                 <span className="material-symbols-outlined">
                     {isLoading ? 'sync' : 'import_export'}
                 </span>
                 <span className={styles.triggerLabel}>
-                    {isLoading ? 'Procesando...' : 'Import / Export'}
+                    {isLoading ? 'Procesando...' : ''}
                 </span>
                 <span className="material-symbols-outlined">
                     {isOpen ? 'expand_less' : 'expand_more'}

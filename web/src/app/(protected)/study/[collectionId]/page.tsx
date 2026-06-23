@@ -15,10 +15,10 @@ const REVIEW_BUTTONS: {
     sublabel: string;
     styleKey: string;
 }[] = [
-    { result: 'AGAIN', label: 'Otra vez', sublabel: 'No lo recordé', styleKey: 'again' },
-    { result: 'HARD', label: 'Difícil', sublabel: 'Con esfuerzo', styleKey: 'hard' },
-    { result: 'GOOD', label: 'Bien', sublabel: 'Lo recordé', styleKey: 'good' },
-    { result: 'EASY', label: 'Fácil', sublabel: 'Sin esfuerzo', styleKey: 'easy' },
+    { result: 'AGAIN', label: 'Otra vez', sublabel: 'No me acorde', styleKey: 'again' },
+    { result: 'HARD', label: 'Difícil', sublabel: 'Me costo', styleKey: 'hard' },
+    { result: 'GOOD', label: 'Bien', sublabel: 'Me acorde', styleKey: 'good' },
+    { result: 'EASY', label: 'Fácil', sublabel: 'Sin problema', styleKey: 'easy' },
 ];
 
 export default function StudyPage() {
@@ -142,7 +142,7 @@ export default function StudyPage() {
                 <h2 className={styles.emptyTitle}>
                     {mode === 'due'
                         ? '¡Todo al día!'
-                        : 'Esta colección no tiene flashcards.'}
+                        : 'Este examen no tiene flashcards.'}
                 </h2>
                 <p className={styles.emptySubtitle}>
                     {mode === 'due'
@@ -192,7 +192,7 @@ export default function StudyPage() {
                         </button>
                         <button className={styles.backLink}
                                 onClick={() => router.back()}>
-                            Volver a la colección
+                            Volver al examen
                         </button>
                     </div>
                 </div>
@@ -204,6 +204,7 @@ export default function StudyPage() {
 
     return (
         <div className={styles.page}>
+            {/* barra de arriba, barra de progreso y modo de estudio */}
             <header className={styles.header}>
                 <button className={styles.exitBtn} onClick={() => router.back()}>
                 <span className="material-symbols-outlined">close</span>
@@ -227,6 +228,7 @@ export default function StudyPage() {
                 </div>
             </header>
 
+            {/* tarjeta de estudio */}
             <main className={styles.main}>
                 <div className={styles.cardContainer} onClick={() => !isFlipped && setIsFlipped(true)}>
                     <div className={`${styles.cardInner} ${isFlipped ? styles.flipped : ''}`}>
@@ -257,6 +259,7 @@ export default function StudyPage() {
                     </div>
                 </div>
 
+                {/* botones de review */}
                 <div className={`${styles.controls} ${isFlipped ? styles.controlsVisible : ''}`}>
                     {REVIEW_BUTTONS.map(({ result, label, sublabel, styleKey }) => (
                         <button key={result}

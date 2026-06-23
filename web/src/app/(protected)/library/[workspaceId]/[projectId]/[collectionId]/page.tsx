@@ -130,25 +130,26 @@ export default function CollectionDetailPage() {
                         </Link>
                         <span className={styles.breadcrumbSep}>›</span>
                         <Link href={`/library/${workspaceId}`} className={styles.breadcrumbLink}>
-                            Projects
+                            Temas
                         </Link>
                         <span className={styles.breadcrumbSep}>›</span>
                         <Link href={`/library/${workspaceId}/${projectId}`} className={styles.breadcrumbLink}>
-                            Collections
+                            Examenes
                         </Link>
                         <span className={styles.breadcrumbSep}>›</span>
                         <span className={styles.breadcrumbCurrent}>Flashcards</span>
+                        <ImportExportMenu accessToken={accessToken!}
+                                    collectionId={collectionId}
+                                    collectionName="Mi examen"
+                                    onImportSuccess={handleImportSuccess}/>
                     </div>
+            
                     <button className={styles.backBtn}
                             onClick={() =>
                                 router.push(`/library/${workspaceId}/${projectId}`)
                             }>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </button>
-                    <ImportExportMenu accessToken={accessToken!}
-                                    collectionId={collectionId}
-                                    collectionName="Mi colección"
-                                    onImportSuccess={handleImportSuccess}/>
                 </div>
             </header>
 
@@ -158,8 +159,8 @@ export default function CollectionDetailPage() {
                         <h2 className={styles.pageTitle}>Flashcards</h2>
                         <p className={styles.pageSubtitle}>
                             {flashcards.length > 0
-                                ? `${flashcards.length} tarjeta${flashcards.length !== 1 ? 's' : ''} en esta colección`
-                                : 'Tu colección de tarjetas de estudio'}
+                                ? `${flashcards.length} tarjeta${flashcards.length !== 1 ? 's' : ''} en este examen`
+                                : 'Tu examen de tarjetas de estudio'}
                         </p>
                     </div>
                     <div className={styles.headerActions}>
@@ -209,6 +210,8 @@ export default function CollectionDetailPage() {
                         ))}
                     </div>
                 )}
+
+                
             </main>
 
             <ImportResultModal isOpen={isImportModalOpen}

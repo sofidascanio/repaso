@@ -65,7 +65,7 @@ export default function WorkspaceDetailPage() {
 
     async function handleDelete(id: string) {
         if (!accessToken) return;
-        if (!confirm('¿Seguro que queres eliminar este project?')) return;
+        if (!confirm('¿Seguro que queres eliminar este tema?')) return;
         await deleteProject(accessToken, id);
         setProjects((prev) => prev.filter((p) => p.id !== id));
     }
@@ -89,7 +89,7 @@ export default function WorkspaceDetailPage() {
                             Biblioteca
                         </Link>
                         <span className={styles.breadcrumbSep}>›</span>
-                        <span className={styles.breadcrumbCurrent}>Projects</span>
+                        <span className={styles.breadcrumbCurrent}>Temas</span>
                     </div>
                     <button className={styles.backBtn}
                             onClick={() => router.push('/library')}>
@@ -101,28 +101,28 @@ export default function WorkspaceDetailPage() {
             <main className={styles.main}>
                 <div className={styles.pageHeader}>
                     <div>
-                        <h2 className={styles.pageTitle}>Projects</h2>
+                        <h2 className={styles.pageTitle}>Temas</h2>
                         <p className={styles.pageSubtitle}>
-                            Organiza tu conocimiento en proyectos
+                            Organiza tu conocimiento por temas
                         </p>
                     </div>
                     <Button variant="primary" onClick={openCreateModal}>
                         <span className="material-symbols-outlined">add</span>
-                        Nuevo project
+                        Nuevo tema
                     </Button>
                 </div>
 
                 {isLoading ? (
                     <div className={styles.loadingState}>
-                        <p>Cargando projects...</p>
+                        <p>Cargando temas...</p>
                     </div>
                 ) : projects.length === 0 ? (
                     <EmptyState icon="folder_open"
-                                title="Sin projects todavía"
-                                description="Creá tu primer project para empezar a organizar tus colecciones."
+                                title="Sin temas todavía"
+                                description="Creá tu primer tema para empezar a organizar tus colecciones."
                                 action={
                                     <Button variant="primary" onClick={openCreateModal}>
-                                        Crear project
+                                        Crear tema
                                     </Button>
                                 }
                     />

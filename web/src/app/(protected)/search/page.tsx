@@ -72,7 +72,7 @@ function SearchContent() {
                     </Link>
                 <div className={styles.searchWrapper}>
                     <SearchBar initialQuery={initialQuery}
-                                placeholder="Buscar workspaces, projects, flashcards..."
+                                placeholder="Buscar materias, temas, flashcards..."
                                 onSearch={(q) => {
                                     setQuery(q);
                                     runSearch(q);
@@ -116,7 +116,7 @@ function SearchContent() {
                             <section className={styles.section}>
                                 <h3 className={styles.sectionTitle}>
                                     <span className="material-symbols-outlined">workspaces</span>
-                                    Workspaces
+                                    Materias
                                 </h3>
                                 <div className={styles.list}>
                                     {results.workspaces.map((w) => (
@@ -150,7 +150,7 @@ function SearchContent() {
                         <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>
                                 <span className="material-symbols-outlined">folder</span>
-                                Projects
+                                Temas
                             </h3>
                             <div className={styles.list}>
                                 {results.projects.map((p) => (
@@ -184,7 +184,7 @@ function SearchContent() {
                         <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>
                                 <span className="material-symbols-outlined">style</span>
-                                Colecciones
+                                Examenes
                             </h3>
                             <div className={styles.list}>
                                 {results.collections.map((c) => (

@@ -21,7 +21,7 @@ export function ImportResultModal({
         <div className={styles.overlay} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Resultado de importación</h2>
+                    <h2 className={styles.title}>Importación existosa</h2>
                     <button className={styles.closeBtn} onClick={onClose}>
                         <span className="material-symbols-outlined">close</span>
                     </button>

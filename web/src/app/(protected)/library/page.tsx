@@ -123,7 +123,7 @@ export default function LibraryPage() {
                     </div>
                     <Button variant="primary" onClick={openCreateModal}>
                         <span className="material-symbols-outlined">add</span>
-                        Nuevo workspace
+                        Nueva Materia
                     </Button>
                 </div>
 
@@ -134,10 +134,10 @@ export default function LibraryPage() {
                 ) : workspaces.length === 0 ? (
                     <EmptyState icon="library_books"
                                 title="Tu biblioteca está vacía"
-                                description="Crea tu primer workspace para empezar a organizar tu conocimiento."
+                                description="Crea tu primer materia para empezar a organizar tu conocimiento."
                                 action={
                                     <Button variant="primary" onClick={openCreateModal}>
-                                        Crear workspace
+                                        Crear materia
                                     </Button>
                                 }
                     />
