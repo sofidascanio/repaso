@@ -11,8 +11,8 @@ import {
     deleteProject,
     Project,
 } from '@/lib/projects';
-import { ProjectCard } from '@/components/project/ProjectCard/ProjectCard';
-import { ProjectModal } from '@/components/project/ProjectModal/ProjectModal';
+import { ProjectCard } from '@/components/cards/ProjectCard';
+import { ProjectModal } from '@/components/modals/ProjectModal';
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState';
 import { Button } from '@/components/ui/Button/Button';
 import styles from './page.module.css';

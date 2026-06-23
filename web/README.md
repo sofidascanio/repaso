@@ -71,18 +71,12 @@ src/
 │   │   ├── IconPicker/
 │   │   ├── InstallPrompt/
 │   │   └── OfflineBanner/
-│   ├── workspace/
-│   │   ├── WorkspaceCard/
-│   │   └── WorkspaceModal/
-│   ├── project/
-│   │   ├── ProjectCard/
-│   │   └── ProjectModal/
-│   ├── collection/
-│   │   ├── CollectionCard/
-│   │   └── CollectionModal/
+│   ├── cards/
+│   │   └── ItemCard/              # Card reutilizable para Workspace, Project y Collection
+│   ├── modals/
+│   │   └── BaseModal/             # Modal reutilizable para Workspace, Project, Collection y Flashcard
 │   ├── flashcard/
 │   │   ├── FlashcardItem/
-│   │   ├── FlashcardModal/
 │   │   ├── ImportExportMenu/
 │   │   └── ImportResultModal/
 │   └── stats/

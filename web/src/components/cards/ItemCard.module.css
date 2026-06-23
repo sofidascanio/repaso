@@ -26,11 +26,6 @@
     margin-bottom: var(--space-md);
 }
 
-.emoji {
-    font-size: 32px;
-    line-height: 1;
-}
-
 .body {
     flex: 1;
 }
@@ -54,6 +49,7 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin: 0;
 }
 
 .footer {
@@ -91,6 +87,9 @@
     border-radius: var(--radius);
     color: var(--color-on-surface-variant);
     transition: background-color 0.2s ease, color 0.2s ease;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .actionBtn:hover {

@@ -11,8 +11,8 @@ import {
     deleteCollection,
     Collection,
 } from '@/lib/collections';
-import { CollectionCard } from '@/components/collection/CollectionCard/CollectionCard';
-import { CollectionModal } from '@/components/collection/CollectionModal/CollectionModal';
+import { CollectionCard } from '@/components/cards/CollectionCard';
+import { CollectionModal } from '@/components/modals/CollectionModal';
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState';
 import { Button } from '@/components/ui/Button/Button';
 import styles from './page.module.css';

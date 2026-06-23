@@ -58,11 +58,11 @@ User
 ### Funcionalidades
 
 - **Autenticación** — registro, login, logout, refresh tokens, JWT
-- **CRUD completo** — workspaces, projects, collections, flashcards
+- **CRUD completo** — materias (workspaces), temas (projects), examenes (collections), flashcards
 - **Repetición espaciada** — algoritmo SM-2 con historial de repasos
 - **Modo estudio** — clásico y pendientes del día
 - **Estadísticas** — racha, precisión, actividad, desglose por resultado
-- **Búsqueda global** — workspaces, projects, collections y flashcards
+- **Búsqueda global** — materias, temas, examenes y flashcards
 - **Import / Export** — JSON y CSV
 - **Perfil** — editar nombre, cambiar password, eliminar cuenta
 - **PWA** — instalable, offline básico

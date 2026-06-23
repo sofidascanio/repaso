@@ -12,7 +12,7 @@ import {
     Flashcard,
 } from '@/lib/flashcards';
 import { FlashcardItem } from '@/components/flashcard/FlashcardItem/FlashcardItem';
-import { FlashcardModal } from '@/components/flashcard/FlashcardModal/FlashcardModal';
+import { FlashcardModal } from '@/components/modals/FlashcardModal';
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState';
 import { Button } from '@/components/ui/Button/Button';
 import { ImportExportMenu } from '@/components/flashcard/ImportExportMenu/ImportExportMenu';

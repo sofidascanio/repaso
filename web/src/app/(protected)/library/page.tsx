@@ -11,8 +11,8 @@ import {
     deleteWorkspace,
     Workspace,
 } from '@/lib/workspaces';
-import { WorkspaceCard } from '@/components/workspace/WorkspaceCard/WorkspaceCard';
-import { WorkspaceModal } from '@/components/workspace/WorkspaceModal/WorkspaceModal';
+import { WorkspaceCard } from '@/components/cards/WorkspaceCard';
+import { WorkspaceModal } from '@/components/modals/WorkspaceModal';
 import { EmptyState } from '@/components/ui/EmptyState/EmptyState';
 import { Button } from '@/components/ui/Button/Button';
 import styles from './page.module.css';
