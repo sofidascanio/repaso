@@ -42,24 +42,27 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 
 ```
 src/
-├── app/                               # App Router de Next.js
-│   ├── (auth)/
-│   │   ├── login/                     # Pagina de login
-│   │   └── register/                  # Pagina de registro
-│   ├── library/
-│   │   └── [workspaceId]/
-│   │       └── [projectId]/
-│   │           └── [collectionId]/    # Flashcards
-│   ├── study/
-│   │   └── [collectionId]/            # Modo estudio
-│   ├── stats/                         # Estadísticas
-│   ├── search/                        # Búsqueda global
-│   ├── profile/                       # Perfil de usuario
-│   ├── layout.tsx                     # Layout raíz
-│   └── page.tsx                       # Redirige a /login
+├── app/                                # App Router de Next.js
+│   ├── (auth)/                         # Rutas públicas (sin AuthGuard)
+│   │   ├── login/                      # Pagina de login
+│   │   └── register/                   # Pagina de registro
+│   ├── (protected)/                    # Rutas privadas (con AuthGuard via layout)
+│   │   ├── layout.tsx                  # Envuelve todas las rutas privadas con AuthGuard
+│   │   ├── library/
+│   │   │   └── [workspaceId]/
+│   │   │       └── [projectId]/
+│   │   │           └── [collectionId]/ # Flashcards
+│   │   ├── study/
+│   │   │   └── [collectionId]/         # Modo estudio
+│   │   ├── stats/                      # Estadísticas
+│   │   ├── search/                     # Búsqueda global
+│   │   └── profile/                    # Perfil de usuario
+│   ├── layout.tsx                      # Layout raíz (AuthProvider, banners PWA)
+│   └── page.tsx                        # Redirige a /login
 │
 ├── components/
-│   ├── ui/                            # Componentes base reutilizables
+│   ├── ui/                       # Componentes base reutilizables
+│   │   ├── AuthGuard/            # Protección de rutas privadas
 │   │   ├── Button/
 │   │   ├── Input/
 │   │   ├── EmptyState/
@@ -88,14 +91,14 @@ src/
 │       └── ResultsBreakdown/
 │
 ├── contexts/
-│   └── AuthContext.tsx               # Estado global de autenticación
+│   └── AuthContext.tsx            # Estado global de autenticación
 │
 ├── hooks/
-│   └── useAuth.ts                    # Re-exporta useAuth desde AuthContext
+│   └── useAuth.ts                 # Re-exporta useAuth desde AuthContext
 │
-├── lib/                              # Clientes HTTP por dominio
-│   ├── api.ts                        # Cliente HTTP base
-│   ├── auth.ts                       # Auth endpoints
+├── lib/                           # Clientes HTTP por dominio
+│   ├── api.ts                     # Cliente HTTP base
+│   ├── auth.ts                    # Auth endpoints
 │   ├── workspaces.ts
 │   ├── projects.ts
 │   ├── collections.ts
@@ -105,13 +108,13 @@ src/
 │   ├── search.ts
 │   ├── profile.ts
 │   ├── import-export.ts
-│   └── icons.ts                     # Registry de iconos SVG
+│   └── icons.ts                   # Registry de íconos SVG
 │
 ├── styles/
-│   ├── globals.css                  # Reset + estilos base
-│   └── tokens.css                   # Design tokens (variables CSS)
+│   ├── globals.css                # Reset + estilos base
+│   └── tokens.css                 # variables CSS
 │
-└── middleware.ts                    # Protección de rutas
+└── middleware.ts                  # Protección de rutas
 ```
 
 ---
@@ -119,18 +122,23 @@ src/
 ## Rutas
 
 ```
-/                               → redirige a /login o /library
-/login                          → formulario de login (pública)
-/register                       → formulario de registro (pública)
-/library                        → lista de workspaces (protegida)
-/library/[wId]                  → lista de projects
-/library/[wId]/[pId]            → lista de collections
-/library/[wId]/[pId]/[cId]      → lista de flashcards
-/study/[collectionId]           → modo estudio
-/study/[collectionId]?mode=due  → solo pendientes
-/stats                          → estadísticas globales
-/search                         → búsqueda global
-/profile                        → perfil y configuración
+# Públicas: grupo (auth)/
+/login                             → formulario de login
+/register                          → formulario de registro
+
+# Privadas: grupo (protected)/   # (protegidas por AuthGuard)
+/library                           → lista de workspaces
+/library/[wId]                     → lista de projects
+/library/[wId]/[pId]               → lista de collections
+/library/[wId]/[pId]/[cId]         → lista de flashcards
+/study/[collectionId]              → modo estudio (todas las tarjetas)
+/study/[collectionId]?mode=due     → modo estudio (solo pendientes)
+/stats                             → estadísticas globales
+/search                            → búsqueda global
+/profile                           → perfil y configuración
+
+# Raíz
+/                   → redirige a /login
 ```
 
 ---
@@ -139,12 +147,24 @@ src/
 
 El estado de autenticación vive en `AuthContext`:
 
-- **Access token** — en memoria. Se pierde al recargar la página pero se recupera automáticamente via refresh token.
-- **Refresh token** — en cookie httpOnly manejada por el backend. El browser la envía automáticamente.
+- **Access token**: en memoria (no en localStorage). Se pierde al recargar la página pero se recupera via refresh token.
+- **Refresh token**: en cookie `httpOnly` manejada por el backend. El browser la envía automáticamente en cada request.
 
-Cuando inicia la app, `AuthContext` intenta recuperar la sesión llamando a `/auth/refresh`. Si hay una cookie válida, la sesión se restaura.
+Al iniciar la app, `AuthContext` intenta recuperar la sesión llamando a `/auth/refresh`. Si hay una cookie válida, la sesión se restaura sin que el usuario tenga que loguearse de nuevo.
 
-Las rutas protegidas se manejan en `src/middleware.ts`, si no hay cookie `refresh_token`, redirige a `/login`.
+### Protección de rutas
+
+La protección de rutas privadas se maneja con el componente `AuthGuard` a través del layout del grupo `(protected)`:
+
+```
+src/app/(protected)/layout.tsx  →  <AuthGuard>{children}</AuthGuard>
+```
+
+`AuthGuard` funciona así:
+
+1. Mientras `AuthContext` está restaurando la sesión (`isLoading: true`) → muestra pantalla de carga
+2. Si no hay sesión activa (`isAuthenticated: false`) → redirige a `/login`
+3. Si hay sesión → renderiza el contenido
 
 ---
 
@@ -208,7 +228,7 @@ La app es instalable como PWA. El service worker se genera automáticamente en b
 
 En desarrollo, el service worker está deshabilitado para no interferir con el hot reload.
 
-Para probar la PWA:
+Para probar:
 
 ```bash
 pnpm build

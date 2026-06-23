@@ -28,7 +28,10 @@ export default function LibraryPage() {
     const [editingWorkspace, setEditingWorkspace] = useState<Workspace | null>(null);
 
     const loadWorkspaces = useCallback(async () => {
-        if (!accessToken) return;
+        if (!accessToken) {
+            setIsLoading(false);
+            return;
+        }
         try {
             const data = await getWorkspaces(accessToken);
             setWorkspaces(data);
